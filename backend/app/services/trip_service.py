@@ -26,3 +26,6 @@ class TripService:
 
     def get_trip_by_id(self, db: Session, trip_id: str) -> TripRequest:
         return self.repo.get_trip_by_id(db, trip_id)
+
+    def get_trips_by_destination(self, db: Session, trip_destination: str) -> List[TripRequest]:
+        return self.repo.get_trips_by_destination(db, trip_destination)

@@ -20,3 +20,10 @@ class TripRequestRepository:
             .filter(TripRequest.id == trip_id)
             .first()
         )
+
+    def get_trips_by_destination(self, db: Session, trip_destination: str):
+        return(
+            db.query(TripRequest)
+            .filter(TripRequest.destination == trip_destination)
+            .all()
+        )
