@@ -29,3 +29,9 @@ class TripService:
 
     def get_trips_by_destination(self, db: Session, trip_destination: str) -> List[TripRequest]:
         return self.repo.get_trips_by_destination(db, trip_destination)
+
+    def get_trips_by_number_of_travelers(self, db: Session, travelers: int) -> List[TripRequest]:
+        return self.repo.get_trips_by_number_of_travelers(db, travelers)
+    
+    def get_trips_by_starting_location(self, db: Session, starting_location: str) -> List[TripRequest]:
+        return self.repo.get_trips_by_starting_location(db, starting_location)

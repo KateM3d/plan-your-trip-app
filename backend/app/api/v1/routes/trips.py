@@ -33,7 +33,7 @@ def get_all_trips(db: Session = Depends(get_db)):
 
 # get by destination name
 @router.get("/name/{trip_destination}", response_model=list[TripRequestResponse])
-def get_trip_by_destination(trip_destination: str, db: Session = Depends(get_db)):
+def get_trips_by_destination(trip_destination: str, db: Session = Depends(get_db)):
     trips = service.get_trips_by_destination(db, trip_destination)
     if not trips:
         raise HTTPException(status_code=404, detail="Trips not found")
@@ -45,4 +45,19 @@ def get_trip_by_id(trip_id: uuid.UUID, db : Session = Depends(get_db)):
     if not trip:
         raise HTTPException(status_code=404, detail="Trip not found")
     return trip
+
+@router.get("/travelers/{travelers}", response_model=list[TripRequestResponse])
+def get_trips_by_number_of_travelers(travelers: int, db: Session = Depends(get_db)):
+    trips = service.get_trips_by_number_of_travelers(db, travelers)
+    if not trips:
+        raise HTTPException(status_code=404, detail="Trips with this number of travelers not found"
+        )
+    return trips
+
+@router.get("/starting-location/{starting_location}", response_model = list[TripRequestResponse])
+def get_trips_by_starting_location(starting_location: str, db: Session =Depends(get_db)):
+    trips = service.get_trips_by_starting_location(db, starting_location)
+    if not trips:
+        raise HTTPException(status_code=404, detail="Trips with this starting location not found")
+    return trips
 
