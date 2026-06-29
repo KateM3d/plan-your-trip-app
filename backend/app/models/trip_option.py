@@ -9,7 +9,8 @@ from app.db.session import Base
 class TripOption(Base):
     __tablename__ = "trip_options"
 
-    id - Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
     trip_request_id = Column(UUID(as_uuid=True), ForeignKey("trip_requests.id"), nullable=False)
     title = Column(String, nullable=False)
     short_description = Column(String, nullable=False)

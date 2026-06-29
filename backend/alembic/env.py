@@ -10,6 +10,7 @@ from alembic import context
 
 from app.db.session import Base
 from app.models.trip_request import TripRequest
+from app.models.trip_option import TripOption
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
