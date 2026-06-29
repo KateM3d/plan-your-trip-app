@@ -1,5 +1,7 @@
 from datetime import datetime
 import uuid
+
+from sqlalchemy.orm import Session
 from app.models.trip_option import TripOption
 from app.repositories.trip_option import TripOptionRepository
 from app.schemas.trip_option import TripOptionCreate
@@ -21,4 +23,8 @@ class TripOptionService:
             is_deleted=False,
         )
 
-    
+    def get_all_options(self, db: Session) -> TripOption:
+        return self.repo.get_all_options(db)
+
+    def get_option_by_id(self, db: Session, id: str) -> TripOption:
+        return self.repo.get_option_by_id(db, id)

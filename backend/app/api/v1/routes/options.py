@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends
+import uuid
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.models.trip_option import TripOption
 from app.repositories.trip_option import TripOptionRepository
 from app.services.trip_option_service import TripOptionService
 from app.db.session import SessionLocal
@@ -23,3 +23,15 @@ def get_db():
 def create_option(data: TripOptionCreate, db: Session = Depends(get_db)):
     option = service.create_option(data)
     return repo.create(db, option)
+
+@router.get("/", response_model = list[TripOptionResponse])
+def get_all_options(db: Session = Depends(get_db)):
+    options = service.get_all_options(db)
+    return options
+
+@router.get("/id/{id}", response_model = TripOptionResponse)
+def get_option_by_id(id: uuid.UUID, db: Session = Depends(get_db)):
+    option = service.get_option_by_id(db, id)
+    if not option:
+        raise HTTPException(status_code=404, detail="Option not found")
+    return option 
