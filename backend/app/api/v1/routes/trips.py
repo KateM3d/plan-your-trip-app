@@ -26,7 +26,6 @@ def create_trip(data: TripRequestCreate, db: Session = Depends(get_db)):
     return repo.create(db, trip)
 
 # get all trips
-
 @router.get("/", response_model=list[TripRequestResponse])
 def get_all_trips(db: Session = Depends(get_db)):
     return service.get_all_trips(db)
@@ -39,6 +38,7 @@ def get_trips_by_destination(trip_destination: str, db: Session = Depends(get_db
         raise HTTPException(status_code=404, detail="Trips not found")
     return trips
 
+# get by trip id
 @router.get("/id/{trip_id}", response_model=TripRequestResponse)
 def get_trip_by_id(trip_id: uuid.UUID, db : Session = Depends(get_db)):
     trip = service.get_trip_by_id(db, trip_id)
@@ -46,6 +46,7 @@ def get_trip_by_id(trip_id: uuid.UUID, db : Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Trip not found")
     return trip
 
+# get by number of travelers
 @router.get("/travelers/{travelers}", response_model=list[TripRequestResponse])
 def get_trips_by_number_of_travelers(travelers: int, db: Session = Depends(get_db)):
     trips = service.get_trips_by_number_of_travelers(db, travelers)
@@ -54,6 +55,7 @@ def get_trips_by_number_of_travelers(travelers: int, db: Session = Depends(get_d
         )
     return trips
 
+# get by starting location
 @router.get("/starting-location/{starting_location}", response_model = list[TripRequestResponse])
 def get_trips_by_starting_location(starting_location: str, db: Session =Depends(get_db)):
     trips = service.get_trips_by_starting_location(db, starting_location)
