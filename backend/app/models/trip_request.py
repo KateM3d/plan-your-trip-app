@@ -1,9 +1,9 @@
 import uuid
+
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy import Boolean, Column, Integer, String, DateTime, func
-from app.db.session import Base
-from datetime import datetime, timezone
 
+from app.db.session import Base
 
 class TripRequest(Base):
     __tablename__ = "trip_requests"
@@ -17,7 +17,7 @@ class TripRequest(Base):
     travelers = Column(Integer, nullable=False)
     departure_datetime = Column(DateTime(timezone=True), nullable=False)
     return_datetime = Column(DateTime(timezone=True), nullable=False)
-    notes = Column(String, nullable=True)
+    user_preferences = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     is_active = Column(Boolean, default=True)
     is_completed = Column(Boolean, default=False)
