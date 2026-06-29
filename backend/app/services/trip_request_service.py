@@ -1,16 +1,19 @@
+import datetime
 from typing import List
+import uuid
 from sqlalchemy.orm import Session
 from app.models.trip_request import TripRequest
 from app.schemas.trip_request import TripRequestCreate
 from app.repositories.trip_request import TripRequestRepository
 
 
-class TripService:
+class TripRequestService:
     def __init__(self, repo: TripRequestRepository | None = None):
         self.repo = repo or TripRequestRepository()
 
     def create_trip(self, data: TripRequestCreate) -> TripRequest:
         return TripRequest(
+            id = uuid.uuid4(),
             destination=data.destination,
             starting_location=data.starting_location,
             budget=data.budget,
@@ -18,7 +21,7 @@ class TripService:
             travelers=data.travelers,
             departure_datetime=data.departure_datetime,
             return_datetime=data.return_datetime,
-            notes=data.notes,
+            user_preferences=data.user_preferences,
         )
 
     def get_all_trips(self, db: Session) -> List[TripRequest]:

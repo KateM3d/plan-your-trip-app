@@ -1,7 +1,7 @@
 import uuid
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.services.trip_service import TripService
+from app.services.trip_request_service import TripRequestService
 from app.repositories.trip_request import TripRequestRepository
 from app.schemas.trip_request import TripRequestCreate, TripRequestResponse
 from app.db.session import SessionLocal
@@ -9,7 +9,7 @@ from app.db.session import SessionLocal
 router = APIRouter()
 
 repo = TripRequestRepository()
-service = TripService(repo)
+service = TripRequestService(repo)
 
 def get_db():
     db = SessionLocal()
