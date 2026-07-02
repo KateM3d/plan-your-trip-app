@@ -20,3 +20,10 @@ class TripOptionRepository:
             .filter(TripOption.id == id)
             .first()
         )
+
+    def get_all_options_by_trip_request_id(self, db: Session, trip_request_id: str):
+        return(
+            db.query(TripOption)
+            .filter(TripOption.trip_request_id == trip_request_id)
+            .all()
+        )

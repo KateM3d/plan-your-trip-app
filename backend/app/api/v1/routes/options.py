@@ -35,3 +35,11 @@ def get_option_by_id(id: uuid.UUID, db: Session = Depends(get_db)):
     if not option:
         raise HTTPException(status_code=404, detail="Option not found")
     return option 
+
+#  get options by trip request id
+@router.get("/trip-request/{trip_request_id}", response_model = list[TripOptionResponse])
+def get_all_options_by_trip_request_id(trip_request_id: uuid.UUID, db:Session = Depends(get_db)):
+    options = service.get_all_options_by_trip_request_id(db, trip_request_id)
+    if not options:
+        raise HTTPException(status_code = 404, detail = "Options not found")
+    return options

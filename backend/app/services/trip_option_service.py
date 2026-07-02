@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 import uuid
 
 from sqlalchemy.orm import Session
@@ -28,3 +29,6 @@ class TripOptionService:
 
     def get_option_by_id(self, db: Session, id: str) -> TripOption:
         return self.repo.get_option_by_id(db, id)
+
+    def get_all_options_by_trip_request_id(self, db: Session, trip_request_id: str) -> List[TripOption]:
+        return self.repo.get_all_options_by_trip_request_id(db,trip_request_id)
