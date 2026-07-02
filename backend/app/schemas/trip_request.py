@@ -12,7 +12,7 @@ class TripRequestCreate(BaseModel):
     travelers: int
     departure_datetime: datetime
     return_datetime: datetime
-    notes: Optional[str] = None
+    user_preferences: Optional[str] = None
 
 
 class TripRequestResponse(BaseModel):
@@ -24,7 +24,7 @@ class TripRequestResponse(BaseModel):
     travelers: int
     departure_datetime: datetime
     return_datetime: datetime
-    notes: Optional[str] = None
+    user_preferences: Optional[str] = None
     created_at: datetime
     is_active: bool
     is_completed: bool

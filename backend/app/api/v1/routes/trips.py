@@ -20,7 +20,7 @@ def get_db():
 
 
 # create 
-@router.post("/create-trip", response_model=TripRequestResponse)
+@router.post("/create-trip", response_model=TripRequestResponse, status_code=201)
 def create_trip(data: TripRequestCreate, db: Session = Depends(get_db)):
     trip = service.create_trip(data)
     return repo.create(db, trip)
