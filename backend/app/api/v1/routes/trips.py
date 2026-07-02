@@ -12,6 +12,9 @@ repo = TripRequestRepository()
 service = TripRequestService(repo)
 
 def get_db():
+    if SessionLocal is None:
+        raise RuntimeError("Database not configured")
+
     db = SessionLocal()
     try:
         yield db

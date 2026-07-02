@@ -13,9 +13,24 @@ jobs:
   test-backend:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: backend
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+      PYTHONPATH: ${{ github.workspace }}/backend
 
     steps:
       - name: Checkout repository
@@ -27,11 +42,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
+        working-directory: backend
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
+      - name: Run migrations
+        working-directory: backend
+        run: alembic upgrade head
+
       - name: Run tests
-        env:
-          PYTHONPATH: .
+        working-directory: backend
         run: pytest -v

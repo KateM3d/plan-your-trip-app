@@ -13,11 +13,14 @@ repo = TripOptionRepository()
 service = TripOptionService(repo)
 
 def get_db():
+    if SessionLocal is None:
+        raise RuntimeError("Database not configured")
+
     db = SessionLocal()
     try:
         yield db
     finally:
-        db.close()  
+        db.close()
 
 @router.post("/create-option", response_model = TripOptionResponse)
 def create_option(data: TripOptionCreate, db: Session = Depends(get_db)):
