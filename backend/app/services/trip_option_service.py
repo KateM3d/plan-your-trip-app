@@ -32,3 +32,6 @@ class TripOptionService:
 
     def get_all_options_by_trip_request_id(self, db: Session, trip_request_id: str) -> List[TripOption]:
         return self.repo.get_all_options_by_trip_request_id(db,trip_request_id)
+
+    def delete_option( self, db: Session, id: str) -> TripOption:
+        return self.repo.delete_option(db, id)

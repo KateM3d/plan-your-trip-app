@@ -43,3 +43,11 @@ def get_all_options_by_trip_request_id(trip_request_id: uuid.UUID, db:Session = 
     if not options:
         raise HTTPException(status_code = 404, detail = "Options not found")
     return options
+
+# soft delete
+@router.put("/delete/{id}", response_model = TripOptionResponse)
+def delete_option(id: uuid.UUID, db: Session = Depends(get_db)):
+    option = service.delete_option(db, id)
+    if not option:
+        raise HTTPException(status_code = 404, detail="Option not found")
+    return option

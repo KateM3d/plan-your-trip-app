@@ -27,3 +27,16 @@ class TripOptionRepository:
             .filter(TripOption.trip_request_id == trip_request_id)
             .all()
         )
+
+    def delete_option(self, db: Session, id: str):
+        option = (
+            db.query(TripOption)
+            .filter(TripOption.id == id)
+            .first()
+        )
+        if not option:
+            return None
+        option.is_deleted = True
+        db.commit()
+        db.refresh(option)
+        return option
