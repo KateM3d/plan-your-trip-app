@@ -1,6 +1,7 @@
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.models.trip_request import TripRequest
+from app.models.trip_option import TripOption
 
 
 class TripRequestRepository:
@@ -44,3 +45,20 @@ class TripRequestRepository:
             .all()
         )
     
+    def delete_request(self, db: Session, id: str):
+        request = (
+            db.query(TripRequest)
+            .filter(TripRequest.id == id)
+            .first()
+        )
+        if not request:
+            return None
+        request.is_deleted = True
+        request.is_saved = False
+        request.is_active = False
+        db.query(TripOption).filter(
+            TripOption.trip_request_id == id
+        ).update({TripOption.is_deleted: True}, synchronize_session=False)
+        db.commit()
+        db.refresh(request)
+        return request

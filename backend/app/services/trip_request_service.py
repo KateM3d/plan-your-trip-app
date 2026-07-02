@@ -38,3 +38,6 @@ class TripRequestService:
     
     def get_trips_by_starting_location(self, db: Session, starting_location: str) -> List[TripRequest]:
         return self.repo.get_trips_by_starting_location(db, starting_location)
+
+    def delete_request(self, db:Session, id: str) -> TripRequest:
+        return self.repo.delete_request(db, id)

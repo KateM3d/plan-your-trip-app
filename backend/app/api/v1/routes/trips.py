@@ -63,3 +63,10 @@ def get_trips_by_starting_location(starting_location: str, db: Session =Depends(
         raise HTTPException(status_code=404, detail="Trips with this starting location not found")
     return trips
 
+# soft delete for trip request
+@router.put("/delete/{id}", response_model = TripRequestResponse) 
+def delete_request(id: uuid.UUID, db: Session = Depends(get_db)):
+    request = service.delete_request(db, id)
+    if not request:
+        raise HTTPException(status_code = 404, detail = "Trip request not found")
+    return request
